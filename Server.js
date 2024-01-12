@@ -11,8 +11,8 @@ app.use(cors({origin:"*"}))
 
 app.use(express.json())
 app.use('/api/v1/user', userRouter)
-app.use('/api/v1', statusRouter)
-app.use('/api/v1/user', taskRouter)
+app.use('/api/v1/status', statusRouter)
+app.use('/api/v1/task', taskRouter)
 app.use('/api/v1/', subTask)
 
 
