@@ -47,7 +47,7 @@ exports.createTask = async (req,res)=>{
   }
 }
 
-exports.getTask = async (req,res)=>{
+exports.getOneTask = async (req,res)=>{
   try{
     const id = req.params.id
     const task = await taskModel.findById(id).populate("subTask");
@@ -75,7 +75,7 @@ try{
   const id = req.params.id
   const {title,desc}= req.body
   const updatedtask = await taskModel.findByIdAndUpdate(id,{title,desc},{new:true})
-  
+
   if(!updatedtask){
     return res.status(400).json({
       message:'Task not updated',
@@ -95,7 +95,27 @@ try{
 
 }
 
+exports.getAllTask = async (req,res)=>{
+  try{
+    const task = await taskModel.find().populate("subTask");
+    if (!task){
+      return res.status(401).json({
+        message: "task not found"
+      })
+    }
+    else{
+      return res.status(200).json({
+        message: 'task found',
+        data:task
+      })
+    }
 
+  }catch(error){
+    res.status(500).json({
+      message:error.message
+    })
+  }
+}
 
 
 
